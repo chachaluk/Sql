@@ -1,0 +1,52 @@
+게시글 테이블을 만들고
+데이터를 넣은다음
+모두조회, 조건조회, 수정, 삭제
+
+게시글 (board) 테이블의 항목
+글제목 : varchar2(50)
+글내용 : varchar2(200)
+글쓴이 : varchar2(50)
+비밀번호 : varchar2(20)
+게시날짜 : Date
+
+데이터1 : 글제목1 , 글내용1 , 이민호 , qqqq1234 , 2021-01-01
+데이터2 : 글제목2 , 글내용2 , 정채연 , wwww1234 , 2021-02-01
+데이터3 : 글제목3 , 글내용3 , 송중기 , eeee1234 , 2021-03-01
+데이터4 : 글제목4 , 글내용4 , 홍준표 , rrrr1234 , 2021-04-01
+데이터5 : 글제목5 , 글내용5 , 문재인 , tttt1234 , 2021-05-01
+
+1.모두조회
+
+2.조건조회
+-글쓴이가 송중기인 게시글을 조회
+-2021년 2월~2021년 3월 게시글 조회
+
+3.수정
+-정채연이 쓴 글 비밀번호 www7777로 변경
+-정채연이 쓴 글 내용 글내용 1234로 변경
+
+4.삭제
+-이민호가 쓴글 삭제
+
+-------------------------------------------------------------------------
+CREATE TABLE Board(
+title varchar2(50),
+content varchar2(200),
+writer varchar2(50),
+pw varchar2(20),
+noticedate Date
+);
+
+insert into Board(title, content, writer, pw, noticedate) values ('글제목1', '글내용1' , '이민호' , 'qqqq1234' , '2021-01-01');
+insert into Board(title, content, writer, pw, noticedate) values ('글제목2' , '글내용2' , '정채연' , 'wwww1234' , '2021-02-01');
+insert into Board(title, content, writer, pw, noticedate) values ('글제목3' , '글내용3' , '송중기' , 'eeee1234' , '2021-03-01');
+insert into Board(title, content, writer, pw, noticedate) values ('글제목4' , '글내용4' , '홍준표' , 'rrrr1234' , '2021-04-01');
+insert into Board(title, content, writer, pw, noticedate) values ('글제목5' , '글내용5' , '문재인' , 'tttt1234' , '2021-05-01');
+
+select*from Board where writer='송중기';
+select*from Board where noticedate BETWEEN '2021-02-01' AND '2021-03-31';
+
+update Board set pw='www7777' where writer='정채연';
+update Board set content='1234' where writer='정채연';
+
+delete from Board where writer='이민호';
