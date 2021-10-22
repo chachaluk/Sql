@@ -1,0 +1,117 @@
+FOREIGN KEY
+외부키, 외래키, 참조키, 외부 식별자 등으로 불리며 FK라고도 함
+FK가 정의된 테이블을 자식테이블이라고 함
+참조되는 테이블, PK가 있는 테이블을 부모테이블이라고 함
+부모데이블의 PK컬럼에 존재하는 데이터만 자식테이블에 입력할 수 있음
+부모테이블은 자식의 데이터나 테이블이 삭제된다고 영향을 받지 않음
+참조하는 데이터 컬럼과 데이터 타입이 반드시 일치해야 함
+참조할 수 있는 컬럼은 기본키(PK) 이거나 UNIQUE만 가능함(보통 PK랑 엮음)
+
+특징
+관계 데이터 모델의 릴레이션 간의 관계를 표현한다
+다른 릴레이션의 기본키를 참조하는 속성이다
+참조하고(외래키) 참조되는(기본키) 양쪽 릴레이션의 도메인은 서로 같아야 한다
+참조되는 값이 변경되면 참조하는 값도 변경된다
+null값과 중복 값 등이 허용된다
+
+
+
+create table test_member(
+id varchar2(10) NOT NULL PRIMARY KEY,
+name varchar2(10) NOT NULL,
+age NUMBER NOT NULL
+);
+
+INSERT INTO test_member(id,name,age) values 
+('asdf1234','김철수',20);
+
+INSERT INTO test_member(id,name,age) values 
+('qwer1234','이민호',21);
+
+INSERT INTO test_member(id,name,age) values 
+('zxcv1234','정채연',22);
+
+----------------------------------------------------
+
+create table test_order(
+order_id varchar2(10) NOT NULL,
+name varchar2(10) NOT NULL,
+order_item varchar2(20) NOT NULL,
+foreign key (order_id) references test_member(id)
+);
+
+INSERT INTO test_order(order_id,name,order_item) values 
+('asdf1234','김철수','셔츠');
+
+INSERT INTO test_order(order_id,name,order_item) values 
+('qwer1234','이민호','청바지');
+
+INSERT INTO test_order(order_id,name,order_item) values 
+('zxcv1234','정채연','원피스');
+
+----------------------------------------------------
+
+select * from test_member;
+
+DESC test_member;
+
+select * from test_order;
+
+DESC test_order;
+
+
+
+아이디 pppp1234 는 부모 테이블에 존재하지 않는다.
+INSERT INTO test_order(order_id,name,order_item) values 
+('pppp1234','정채연','원피스');
+-추가 불가능
+----------------------------------------------------
+- 부모테이블은 자식의 데이터나 테이블이 삭제된다고 영향을 받지 않습니다.
+delete from test_order where order_id='asdf1234';
+----------------------------------------------------
+- 부모테이블을 참조하는 자식 테이블의 데이터가 있을경우 함부로 삭제하지 못함
+delete from test_member where id='qwer1234';
+
+----------------------------------------------------
+UPDATE test_member SET id='aaaa1234' where name='김철수';
+
+오류발생
+기본키 값을 바꾸면
+이를 참조하는 외래키가 문제가 생기므로
+
+----------------------------------------------------
+
+SET foreign_key_checks = 0;
+//외래키 해제
+
+UPDATE test_member SET id='aaaa1234' 
+where name='김철수';
+//기본키를 바꾼다.
+
+//기본키를 참조하고있던 외래키도 바꿔주어야
+//참조 무결성이 깨지지않습니다.
+
+select * from test_member;
+
+select * from test_order;
+
+----------------------------------------------------
+
+
+ON DELETE CASCADE
+외래 키에서 참조하는 키가 포함된 행을 삭제하려고 하면 해당 외래 키가 포함되어 있는 모든 행도 삭제
+
+ON UPDATE CASCADE
+외래 키에서 참조하는 키 값이 포함된 행에서 키 값을 업데이트 하면 해당 외래 키를 구성하는 모든 값도 키에 지정된 새 값으로 업데이트되도록 지정
+
+alter table test_order add constraint ON UPDATE CASCADE 
+foreign key order_id;
+
+alter table test_order update constraint ON UPDATE CASCADE 
+foreign key order_id;
+
+alter table test_order add constraint order_fk
+foreign key(order_id)
+references test_member(id) ON UPDATE CASCADE;
+
+
