@@ -1,0 +1,13 @@
+-------------------------------
+SELECT suppliers.supplier_id, suppliers.supplier_name, order1.order_number  
+FROM suppliers LEFT OUTER JOIN order1  
+ON suppliers.supplier_id = order1.supplier_id;  
+-------------------------------
+SELECT order1.order_number, order1.city, suppliers.supplier_name  
+FROM suppliers RIGHT OUTER JOIN order1  
+ON suppliers.supplier_id = order1.supplier_id;
+-------------------------------
+SELECT suppliers.supplier_id, suppliers.supplier_name, order1.order_number  
+FROM suppliers FULL OUTER JOIN order1  
+ON suppliers.supplier_id = order1.supplier_id; 
+------------------------------- 
