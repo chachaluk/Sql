@@ -1,0 +1,42 @@
+Controller: main, 메뉴, 조건 조회함수
+DAO: 데이터 연결시키는 코드
+DTO: DB에서 받아온 데이터 변환(getter, setter)
+Service: DAO를 포함..세분화된 비즈니스 로직 처리 객체
+Sql Crud : DBA 데이터베이스 구축하기, 데이터 무결성 보장
+---------------------------------------------------------------------------------------------------
+
+MVC(MODEL, VIEW, CONTROLLER): 데이터 및 논리 제어를 구현하는데 널리 사용되는 소프트웨어 디자인 패턴
+
+---------------------------------------------------------------------------------------------------
+
+Model(비즈니스 로직 처리 기능): Service, DAO, DTO
+View(화면 응답 기능): 사용자에게 보여지는 것
+Controller(요청 처리 기능): View와 Model을 이어주는 것
+
+---------------------------------------------------------------------------------------------------
+
+DAO(Data Access Object: 데이터 접근 개체)
+domain logic(business logic이나 DB와 관련 없는 로직)을 persistence mechanism(DB에 data를 CRUD하는 계층)과 분리하기 위해사용
+데이터 요청이 들어올 때마다 DAO에서 Connection 객체(DB에 접근해 Query(DB를 사용하는 명령어)를 수행하는 객체)를 생성하면, 너무 많은 커넥션으로 인해 오류 발생
+그렇기 때문에 Singleton(단독개체: 클래스가 메모리에 할당될 때 고정된 하나의 객체를 할당하고, 이후 그것만 참조하는 디자인패턴)패턴으로 하나의 객체만 생성되도록 구성
+
+
+DTO(Data Transfer Object)
+DB에서 받아온 데이터들을 매핑(변환)하기 위한 객체
+일반적으로 logic을 가지고 있지 않고 getter, setter만 있음
+계층간 데이터 교환을 위한 Java Beans
+
+*Java Beans: 자바 관련 소프트웨어 개발에 있어 재사용이 가능한 표준 컴포넌트 모델
+1. private field(인스턴스 변수를 private로 가짐)를 가지고 있음
+2. getter, setter로 필드에 접근
+3. 생성자를 가짐
+4. Serializable(자바 내부의 Object나 데이터를 외부에서도 사용할 수 있도록 하는 기술) 구현
+
+
+Service
+Controller가 Request를 받으면 적절한 Service에 전달하고 전달받은 Service는 business logic을 처리
+Service가 DB에 DAO로 접근하고 데이터를 DTO로 전달받은 후에 데이터를 필요에 맞게 가공하여 반환
+
+
+
+
