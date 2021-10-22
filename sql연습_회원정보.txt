@@ -1,0 +1,50 @@
+회원 테이블을 만들고
+데이터를 넣은다음
+모두조회, 조건조회, 수정, 삭제
+
+회원 (member) 테이블의 항목
+아이디 : varchar2(30)
+비밀번호 : varchar2(30)
+주소 : varchar2(100)
+전화번호 : varchar2(20) 
+
+데이터1 : asdf1234 , asdf4321 , 대구 광역시 서구 내당동 , 010-4025-5255
+데이터2 : qwer1234 , qwer4321 , 대구 광역시 북구 칠성동 , 010-5025-5255
+데이터3 : zxcv1234 , zxcv4321 , 대구 광역시 북구 대현동 , 010-6025-5255
+데이터4 : tyui1234 , tyui4321 , 대구 광역시 동구 효목동 , 010-7025-5255
+데이터5 : hjkl1234 , hjkl4321 , 대구 광역시 남구 대명동 , 010-8025-5255
+
+1.모두조회
+
+2.조건조회
+-아이디 asdf1234의 정보 조회
+-북구에 사는 회원의 정보 조회
+
+3.수정
+-아이디 asdf1234의 비밀번호를 asdf7777로 변경
+
+4.삭제
+-아이디 asdf1234의 정보 삭제
+
+----------------------------------------------------------------------------------------------
+CREATE TABLE Member(
+id varchar2(30),
+pw varchar2(30),
+address varchar2(100),
+phonenumber varchar2(20)
+);
+
+insert into Member(id, pw, address, phonenumber) values ('asdf1234' , 'asdf4321' , '대구 광역시 서구 내당동' , '010-4025-5255');
+insert into Member(id, pw, address, phonenumber) values ('qwer1234' , 'qwer4321' , '대구 광역시 북구 칠성동' , '010-5025-5255');
+insert into Member(id, pw, address, phonenumber) values ('zxcv1234' , 'zxcv4321' , '대구 광역시 북구 대현동' , '010-6025-5255');
+insert into Member(id, pw, address, phonenumber) values ('tyui1234' , 'tyui4321' , '대구 광역시 동구 효목동' , '010-7025-5255');
+insert into Member(id, pw, address, phonenumber) values ('hjkl1234' , 'hjkl4321' , '대구 광역시 남구 대명동' , '010-8025-5255');
+
+select*from Member;
+
+select*from Member where id='asdf1234';
+select*from Member where address='대구 광역시 북구 대현동';
+
+update Member set pw='asdf7777' where id='asdf1234';
+
+delete from Member where id='asdf1234';
