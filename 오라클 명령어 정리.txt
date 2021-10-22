@@ -1,0 +1,251 @@
+//테이블 생성, 데이터 삽입, 조회
+CREATE TABLE emp
+(
+empno NUMBER(4),
+ename VARCHAR2(10),
+position VARCHAR2(10),
+hiredate DATE,
+salary NUMBER(10)
+);
+
+
+//데이터 삽입 (CREATE)
+INSERT INTO emp(empno, ename, position, hiredate, salary)
+values(1,'이민호','사원','2021-01-01',3000);
+
+INSERT INTO emp(empno,ename,position,hiredate,salary) 
+values(2,'정채연','사원','2021-02-01',3500);
+
+INSERT INTO emp(empno,ename,position,hiredate,salary) 
+values(3,'송중기','대리','2019-03-01',5000);
+
+
+//테이블 삭제
+DROP TABLE emp;
+
+//테이블의 모든 데이터 삭제
+truncate table emp;
+
+//테이블 정보 확인
+DESC emp;
+
+//조건조회
+SELECT * FROM emp;
+
+SELECT * FROM emp where empno=1;
+SELECT * FROM emp where empno=2;
+SELECT * FROM emp where empno=3;
+SELECT * FROM emp where empno>=2;
+SELECT * FROM emp where ename='정채연';
+
+SELECT * FROM emp where empno>=2 AND POSITION='사원';
+SELECT * FROM emp where empno>=2 OR POSITION='사원';
+SELECT * FROM emp where NOT ename='정채연';
+
+
+//BETWEEN
+SELECT * FROM emp WHERE empno BETWEEN 2 AND 3;
+SELECT * FROM emp WHERE empno BETWEEN 4 AND 10;
+SELECT * FROM emp WHERE salary BETWEEN 3000 AND 3400;
+SELECT * FROM emp WHERE salary BETWEEN 3000 AND 3500;
+SELECT * FROM emp WHERE salary BETWEEN 3200 AND 4000;
+SELECT * FROM emp WHERE salary BETWEEN 3200 AND 5000;
+SELECT * FROM emp WHERE hiredate BETWEEN '21-01-01' AND '21-02-01';
+SELECT * FROM emp WHERE hiredate BETWEEN '21-01-01' AND '21-03-01';
+SELECT * FROM emp WHERE hiredate BETWEEN '19-03-01' AND '21-01-01';
+
+SELECT * FROM emp WHERE ename BETWEEN '송공기' AND '이호현';
+SELECT * FROM emp WHERE ename BETWEEN '송공기' AND '이민기';
+SELECT * FROM emp WHERE ename BETWEEN '송현기' AND '정채민';
+
+
+//ALTER(추가, 수정, 삭제, 이름변경)
+ALTER TABLE emp ADD (COMPANY VARCHAR2(10));//추가
+ALTER TABLE emp MODIFY (COMPANY VARCHAR2(20));//수정
+ALTER TABLE emp DROP COLUMN COMPANY;//삭제
+
+ALTER TABLE emp ADD (COMPANY VARCHAR2(10));
+SELECT * FROM emp;
+ALTER TABLE emp RENAME COLUMN COMPANY TO COMPANY_NAME;//테이블이름변경
+
+
+//UPDATE(수정)
+SELECT * from emp;
+UPDATE emp SET salary=3200 WHERE ename='이민호';
+SELECT * from emp;
+UPDATE emp SET hiredate='21-01-02' WHERE ename='이민호';
+SELECT * from emp;
+UPDATE emp SET hiredate='2021-01-03' WHERE ename='이민호';
+SELECT * from emp;
+UPDATE emp SET POSITION='대리' WHERE ename='이민호';
+SELECT * from emp;
+
+
+//DELETE(삭제)
+SELECT * FROM emp;
+ALTER TABLE emp DROP COLUMN COMPANY_NAME;
+
+DELETE FROM emp WHERE ename='이민호';
+SELECT * FROM emp;
+
+DELETE FROM emp WHERE position='사원';
+SELECT * FROM emp;
+
+DELETE FROM emp WHERE salary >= 5000;
+SELECT * FROM emp;
+
+
+
+//복구 쿼리
+
+INSERT INTO emp(empno,ename,position,hiredate,salary) 
+values(1,'이민호','사원','2021-01-01',3000);
+
+INSERT INTO emp(empno,ename,position,hiredate,salary) 
+values(2,'정채연','사원','2021-02-01',3500);
+
+INSERT INTO emp(empno,ename,position,hiredate,salary) 
+values(3,'송중기','대리','2019-03-01',5000);
+
+//조회
+SELECT * from emp;
+
+//오름차순, 내림차순
+SELECT empno FROM emp ORDER BY empno ASC;
+SELECT empno,ename FROM emp ORDER BY empno ASC;
+SELECT * FROM emp ORDER BY empno ASC;
+SELECT * FROM emp ORDER BY empno DESC;
+
+SELECT * FROM emp ORDER BY ename ASC;
+SELECT * FROM emp ORDER BY ename DESC;
+
+SELECT * FROM emp ORDER BY salary ASC;
+SELECT * FROM emp ORDER BY salary DESC;
+
+/*  SELECT*FROM emp ORDER BY empno ASC;//사원번호 오름차순 정렬
+SELECT*FROM emp ORDER BY empno DESC;//사원번호 내림차순 정렬
+ASC-ASCENDING(상승하는), DESC-DESCENDING(하강하는)
+ORDER BY ~ ASC, DESC(번호순, 가격순, 날짜순 나중에 살짝 바꿔서 응용)  */
+
+
+
+DEXC emp;//테이블 정보확인
+
+ALTER ~ 변경
+
+
+ALTER TABLE emp
+ADD(COMPANY VARCHAR2(10));
+-칼럼 항목 추가
+
+ALTER TABLE emp
+ADD(COMPANY VARCHAR2(20));
+-칼럼 항목 변경
+
+ALTER TABLE emp
+DROP COLUMN COMPANY;
+-칼럼 항목 삭제
+
+ALTER TABLE emp
+ADD(COMPANY VARCHAR2(10));
+-칼럼 항목 추가
+
+ALTER TABLE emp
+RENAME COLUMN
+COMPANY TO COMPANY_NAME;
+-칼럼 이름 변경
+
+BETWEEN으로 숫자, 날짜, 가나다순 범위
+
+
+//부분 검색
+select*from FOOD where name LIKE '%김';
+//여러글자+끝글자 김
+
+select*from FOOD where name LIKE '_김';
+//한글자+끝글자 김
+
+select*from FOOD where name LIKE '%김%';
+//김이라는 글자가 있기만하면 검색됨
+//맛김, 곱창김, 김가루, 땡초김밥
+
+
+
+//시퀀스(수열): 리스트 번호 매기는 것
+CREATE SEQUENCE EX_SEQ
+INCREMENT BY 1
+START WITH 1
+MINVALUE 1
+MAXVALUE 1000
+NOCYCLE
+NOCACHE;
+
+
+
+//NOT NULL제약조건
+//NULL 값을 허용하지 않는다
+ CREATE TABLE board(
+title VARCHAR2(10) NOT NULL,
+content VARCHAR2(1000) NOT NULL,
+hashtag VARCHAR2(100)
+);
+
+
+//PRIMARY KEY 중복 차단
+//기본키, NOT NULL과 UNIQUE의 조합
+//널 값 허용하지 않고 중복도 허용하지 않음
+//학번, 아이디, 주민등록번호 등에 필수 제약조건
+//중복데이터를 프로그램이 아닌 DBMS상에서 원천차단-행정오류가 생기지 않음
+
+CREATE TABLE STUDENT(
+ID VARCHAR(20) PRIMARY KEY,
+NAME VARCHAR(20),
+MAJOR VARCHAR(20),
+GRADE NUMBER(2),
+ENT_DATE DATE
+);
+
+//체크 제약조건
+CREATE TABLE SAMSUNG(
+EMPNO VARCHAR2(10),
+ENAME VARCHAR2(10),
+SAL NUMBER(7,2),
+CONSTRAINT SAL_CK CHECK(SAL BETWEEN 500 AND 5000),
+GENDER VARCHAR2(1),
+CONSTRAINT GENDER_CK CHECK(GENDER IN('M', 'F'))
+);
+
+//제약조건 테이블 예시
+CREATE TABLE SMARTPHONE(
+NAME VARCHAR(20),
+COMPANY VARCHAR(20),
+PROVIDER VARCHAR(20),
+MANUFACTURING_DAY DATE,
+SERIAL_NUM VARCHAR(20) PRIMARY KEY,
+PRICE INT,
+CONSTRAINT provider_ck CHECK(provider in('SKT', 'LG U+', 'KT')),
+WEIGHT INT,
+COLOR VARCHAR(20)
+);
+
+
+//DATE타입 시분초 입력
+INSERT시에 TO_DATE('1111-11-11- 21:11:22','YYYY-MM-DD HH24:MI:SS')
+호출시에 TO_CHAR(컬럼명, 'YYYY-MM-DD HH24:MI:SS')
+
+//날짜에 제약조건걸기
+ALTER TABLE SMARTPHONE ADD(
+	CONSTRANT REASONABLE_DATE CHECK(
+		TO_CHAR(MANUFACTURING_DAY,'YYYY-MM-DD')>='2001-12-31'
+	)
+);
+
+ALTER TABLE SMARTPHONE ADD(
+	CONSTRAINT reasonable_date CHECK(
+		TO_CHAR(MANUFACTURING_DAY,'YYYY-MM-DD')>='2001-12-31'
+		AND
+		TO_CHAR(MANUFACTURING_DAY,'YYYY-MM-DD')<='2002-12-31'
+	)
+
+);
+
