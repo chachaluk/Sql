@@ -1,0 +1,47 @@
+SUPPLIERS테이블과 ORDER1테이블을 INNER JOIN(내부조인)한다
+두 테이블을 ON~ 두 테이블의 아이디를 기준으로
+INNER JOIN은 교집합에 해당하는 데이터만 출력
+여러 테이블의 항목을 뽑아서 한 번에 보여주고싶을 때 사용
+
+create table Suppliers(
+SUPPLIER_ID NUMBER,
+SUPPLIER_NAME VARCHAR2(2400),
+SUPPLIER_ADDRESS VARCHAR2(2400)
+);
+
+INSERT INTO Suppliers(SUPPLIER_ID,SUPPLIER_NAME,SUPPLIER_ADDRESS)
+Values (1,'Bata shoes','Agra');
+
+INSERT INTO Suppliers(SUPPLIER_ID,SUPPLIER_NAME,SUPPLIER_ADDRESS)
+Values (2,'Kingfisher','Delhi');
+
+INSERT INTO Suppliers(SUPPLIER_ID,SUPPLIER_NAME,SUPPLIER_ADDRESS)
+Values (3,'VOJO','Lucknow');
+
+SELECT * from Suppliers;
+
+create table Order1(
+ORDER_NUMBER NUMBER,
+SUPPLIER_ID NUMBER,
+CITY VARCHAR2(2400)
+);
+
+INSERT INTO Order1(ORDER_NUMBER,SUPPLIER_ID,CITY)
+Values (101,1,'Allahabad');
+
+INSERT INTO Order1(ORDER_NUMBER,SUPPLIER_ID,CITY)
+Values (102,2,'Kanpur');
+
+SELECT * from order1;
+
+
+SELECT suppliers.supplier_id, suppliers.supplier_name, order1.order_number  
+FROM suppliers INNER JOIN order1  
+ON suppliers.supplier_id = order1.supplier_id;  
+
+SELECT ~
+: ~을 선택한다
+FROM SUPPLIERS INNER JOIN ORDER1
+: SUPPLIERS 테이블과 ORDER1테이블을 INNER JOIN한 것으로부터
+ON SUPPLISERS.SUPPLIER_ID = ORDER1.SUPPLIER_ID;
+:아이디를 기준으로 이너조인한 두 테이블의 항목을 출력
